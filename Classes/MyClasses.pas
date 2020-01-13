@@ -3,7 +3,7 @@ unit MyClasses;
 interface
 
 uses
-  Winapi.Messages, System.Classes, FireDAC.Comp.DataSet;
+  Winapi.Messages, System.Classes, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
 
 const
   // Used to draw border of highlighted cell in DX grid & tree components.

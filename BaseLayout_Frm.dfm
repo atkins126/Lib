@@ -3,11 +3,12 @@ inherited BaseLayoutFrm: TBaseLayoutFrm
   PixelsPerInch = 96
   TextHeight = 13
   object layMain: TdxLayoutControl [0]
-    Left = 10
-    Top = 10
+    Left = 8
+    Top = 8
     Width = 526
     Height = 376
     TabOrder = 0
+    LayoutLookAndFeel = lafCustomSkin
     object layMainGroup_Root: TdxLayoutGroup
       AlignHorz = ahClient
       AlignVert = avClient
@@ -22,6 +23,7 @@ inherited BaseLayoutFrm: TBaseLayoutFrm
   end
   inherited lafLayoutList: TdxLayoutLookAndFeelList
     inherited lafCustomSkin: TdxLayoutSkinLookAndFeel
+      LookAndFeel.Kind = lfUltraFlat
       PixelsPerInch = 96
     end
   end

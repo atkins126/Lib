@@ -52,6 +52,7 @@ type
   ESelectionException = class(Exception);
   EFileNotFoundException = class(Exception);
   EExecutionException = class(Exception);
+  EServerError = class(Exception);
 
 var
   FileExtension: TFileExtensions;

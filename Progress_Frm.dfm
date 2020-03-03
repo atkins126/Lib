@@ -2,17 +2,18 @@ inherited ProgressFrm: TProgressFrm
   BorderIcons = []
   BorderStyle = bsNone
   Caption = 'ProgressFrm'
-  ClientHeight = 245
+  ClientHeight = 259
   ClientWidth = 562
   ExplicitWidth = 562
-  ExplicitHeight = 245
+  ExplicitHeight = 259
   PixelsPerInch = 96
   TextHeight = 13
   inherited layMain: TdxLayoutControl
     Width = 450
-    Height = 120
+    Height = 188
+    LayoutLookAndFeel = nil
     ExplicitWidth = 450
-    ExplicitHeight = 120
+    ExplicitHeight = 188
     object imgDownload: TcxImage [0]
       Left = 11
       Top = 11
@@ -1846,13 +1847,24 @@ inherited ProgressFrm: TProgressFrm
       Properties.SolidTextColor = True
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
-      Style.TransparentBorder = True
+      Style.LookAndFeel.Kind = lfUltraFlat
+      Style.LookAndFeel.NativeStyle = False
+      Style.LookAndFeel.SkinName = 'UserSkin'
+      StyleDisabled.LookAndFeel.Kind = lfUltraFlat
+      StyleDisabled.LookAndFeel.NativeStyle = False
+      StyleDisabled.LookAndFeel.SkinName = 'UserSkin'
+      StyleFocused.LookAndFeel.Kind = lfUltraFlat
+      StyleFocused.LookAndFeel.NativeStyle = False
+      StyleFocused.LookAndFeel.SkinName = 'UserSkin'
+      StyleHot.LookAndFeel.Kind = lfUltraFlat
+      StyleHot.LookAndFeel.NativeStyle = False
+      StyleHot.LookAndFeel.SkinName = 'UserSkin'
       TabOrder = 3
       Transparent = True
       Width = 428
     end
     inherited layMainGroup_Root: TdxLayoutGroup
-      ItemIndex = 1
+      ItemIndex = 2
     end
     object grpHeader: TdxLayoutGroup
       Parent = layMainGroup_Root
@@ -1863,10 +1875,11 @@ inherited ProgressFrm: TProgressFrm
       ShowBorder = False
       Index = 0
     end
-    object grpProgress: TdxLayoutGroup
+    object grpDownloadProgress: TdxLayoutGroup
       Parent = layMainGroup_Root
       CaptionOptions.Text = 'New Group'
       ButtonOptions.Buttons = <>
+      ItemIndex = 1
       ShowBorder = False
       Index = 2
     end
@@ -1890,7 +1903,7 @@ inherited ProgressFrm: TProgressFrm
       Index = 0
     end
     object litSubTitle: TdxLayoutItem
-      Parent = grpProgress
+      Parent = grpDownloadProgress
       CaptionOptions.Text = 'New Item'
       CaptionOptions.Visible = False
       Control = lblDownloadName
@@ -1900,9 +1913,9 @@ inherited ProgressFrm: TProgressFrm
       Index = 0
     end
     object litProgressBar: TdxLayoutItem
-      Parent = grpProgress
+      Parent = grpDownloadProgress
       Control = prgDownload
-      ControlOptions.OriginalHeight = 21
+      ControlOptions.OriginalHeight = 19
       ControlOptions.OriginalWidth = 291
       ControlOptions.ShowBorder = False
       Index = 1

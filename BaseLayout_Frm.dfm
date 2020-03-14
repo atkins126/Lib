@@ -3,8 +3,8 @@ inherited BaseLayoutFrm: TBaseLayoutFrm
   PixelsPerInch = 96
   TextHeight = 13
   object layMain: TdxLayoutControl [0]
-    Left = 8
-    Top = 8
+    Left = 0
+    Top = 0
     Width = 526
     Height = 376
     TabOrder = 0

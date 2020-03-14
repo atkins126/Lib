@@ -5,7 +5,6 @@ interface
 uses
   Winapi.Windows, Winapi.Messages;
 
-
 const
   Days: array[1..7] of string = ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
 
@@ -31,7 +30,7 @@ const
   // Default registry constants
   // Common keys
   KEY_ROOT = '\Software\Van Brakel';
-  KEY_COMMON = {KEY_ROOT + }'Common\';
+  KEY_COMMON = {KEY_ROOT + } 'Common\';
   KEY_RESOURCE = KEY_COMMON + 'Resource';
   KEY_DATABASE = KEY_COMMON + 'Database';
   KEY_DATASNAP = KEY_COMMON + 'DataSnap';
@@ -77,7 +76,9 @@ const
 //  SQL_DATASET_NAME = 'SELECT S.SQL_STATEMENT FROM VIEW_SCRIPT S WHERE S.DATASET_NAME = %s';
 
   SQL_STATEMENT = 'SELECT S.SQL_STATEMENT, S.DATASET_NAME FROM SCRIPT S WHERE S.ID = %s';
-  SQL_DATASET_NAME = 'SELECT S.SQL_STATEMENT FROM SCRIPT S WHERE S.DATASET_NAME = %s';
+  SQL_DATASET_NAME = 'SELECT S.SQL_STATEMENT FROM SCRIPT S WHERE S.ID = %s';
+//  SQL_DATASET_NAME = 'SELECT S.SQL_STATEMENT FROM SCRIPT S WHERE S.DATASET_NAME = %s';
+//  SQL_DATASET_NAME = 'SELECT S.SQL_STATEMENT FROM SCRIPT S WHERE S.DATASET_NAME LIKE %%%s%%';
 
   //----------------------------------------------------------------------------
 

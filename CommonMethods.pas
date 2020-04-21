@@ -212,55 +212,55 @@ var
   ProcInfo: TProcessInformation;
 begin
   Result := True;
-  try
     // Local webserver is not already running then start it.
-    if not RUtils.IsInUse(ServerName) then
+  if not RUtils.IsInUse(ServerName) then
       // If the local webserver exe file not found at expected location then
       // raise and exception.
-      if not TFile.Exists(ServerName) then
-      begin
-        Result := False;
-        ErrorMsg := Application.Title + ' - Datasnap Server Error' + CRLF +
-          'The local Datasnap server ' + ServerName + CRLF +
-          'could not be found in the expected location.' + CRLF + CRLF +
-          'Please ensure that it is located in the correct folder.';
-        raise EFileNotFoundException.Create(ErrorMsg);
-      end
-      else
-      begin
-        FillChar(StartInfo, SizeOf(TStartupInfo), #0);
-        FillChar(ProcInfo, SizeOf(TProcessInformation), #0);
-        StartInfo.cb := SizeOf(TStartupInfo);
-        StartInfo.dwFlags := STARTF_USESHOWWINDOW;
-        StartInfo.wShowWindow := SW_SHOW;
-        GetStartupInfo(StartInfo);
-
-        repeat
-          Success := CreateProcess(
-            PWideChar(ServerName),
-            PWideChar(ServerName { + Args}),
-            nil,
-            nil,
-            False,
-            CREATE_NEW_PROCESS_GROUP + NORMAL_PRIORITY_CLASS + {CREATE_BREAKAWAY_FROM_JOB +}STARTF_FORCEONFEEDBACK,
-            nil,
-            nil,
-            StartInfo,
-            ProcInfo);
-        until
-          Success = True;
-      end;
-  except
-    on E: Exception do
+    if not TFile.Exists(ServerName) then
     begin
       Result := False;
-      ErrorMsg := Application.Title + ' - Datsnap Connection Error' + CRLF +
-        'A connection to the Datasnap server could not be established.' + CRLF + CRLF +
-        E.Message
-        + CRLF + CRLF + 'Please ensure that the local ' + Application.Title + ' Datasnap '
-        + CRLF + 'server is running and try again.';
-    end;
-  end;
+      ErrorMsg := Application.Title + ' - Remote Server Error' + CRLF +
+        'The local Datasnap server ' + ServerName + CRLF +
+        'could not be found in the expected location.' + CRLF + CRLF +
+        'Please ensure that it is located in the correct folder.';
+      raise EFileNotFoundException.Create(ErrorMsg);
+    end
+    else
+      try
+        begin
+          FillChar(StartInfo, SizeOf(TStartupInfo), #0);
+          FillChar(ProcInfo, SizeOf(TProcessInformation), #0);
+          StartInfo.cb := SizeOf(TStartupInfo);
+          StartInfo.dwFlags := STARTF_USESHOWWINDOW;
+          StartInfo.wShowWindow := SW_SHOW;
+          GetStartupInfo(StartInfo);
+
+          repeat
+            Success := CreateProcess(
+              PWideChar(ServerName),
+              PWideChar(ServerName { + Args}),
+              nil,
+              nil,
+              False,
+              CREATE_NEW_PROCESS_GROUP + NORMAL_PRIORITY_CLASS + {CREATE_BREAKAWAY_FROM_JOB +}STARTF_FORCEONFEEDBACK,
+              nil,
+              nil,
+              StartInfo,
+              ProcInfo);
+          until
+            Success = True;
+        end;
+      except
+        on E: Exception do
+        begin
+          Result := False;
+          ErrorMsg := Application.Title + ' - Datsnap Connection Error' + CRLF +
+            'A connection to the Datasnap server could not be established.' + CRLF + CRLF +
+            E.Message
+            + CRLF + CRLF + 'Please ensure that the local ' + Application.Title + ' Datasnap '
+            + CRLF + 'server is running and try again.';
+        end;
+      end;
 end;
 
 function ComponentToString(Component: TComponent): string;

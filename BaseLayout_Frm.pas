@@ -11,18 +11,23 @@ uses
 
   cxImageList, cxGraphics, dxLayoutLookAndFeels, cxClasses, cxStyles, cxControls,
   cxLookAndFeels, cxLookAndFeelPainters, dxSkinsCore, dxSkinsDefaultPainters,
-  dxLayoutContainer, dxLayoutControl, dxSkinMoneyTwins,
-  dxSkinOffice2019Colorful, dxSkinTheBezier;
+  dxLayoutContainer, dxLayoutControl, cxDBLookupComboBox;
 
 type
+  TcxLookupComboBoxAccess = class(TcxLookupComboBox);
+
   TBaseLayoutFrm = class(TBaseFrm)
     layMainGroup_Root: TdxLayoutGroup;
     layMain: TdxLayoutControl;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
+    FAllow: Boolean;
   public
     { Public declarations }
+    procedure DoMouseWheel(Sender: TObject; Allow: Boolean);
+    procedure LookupViewMouseWheel(Sender: TObject; Shift: TShiftState;
+      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
   end;
 
 var
@@ -31,6 +36,18 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TBaseLayoutFrm.DoMouseWheel(Sender: TObject; Allow: Boolean);
+begin
+  FAllow :=  Allow;
+  TcxLookupComboBoxAccess(Sender).OnMouseWheel := LookupViewMouseWheel;
+end;
+
+procedure TBaseLayoutFrm.LookupViewMouseWheel(Sender: TObject;
+  Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+begin
+  Handled := not FAllow;
+end;
 
 procedure TBaseLayoutFrm.FormCreate(Sender: TObject);
 begin

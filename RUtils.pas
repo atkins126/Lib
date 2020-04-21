@@ -31,7 +31,7 @@ type
   } LASTINPUTINFO, *PLASTINPUTINFO;
 *)
 
-{$EXTERNALSYM tagLASTINPUTINFO}
+  {$EXTERNALSYM tagLASTINPUTINFO}
 
   tagLASTINPUTINFO = record
     cbSize: Integer; // The size of the structure, in bytes. This member must be set to sizeof(LASTINPUTINFO)
@@ -40,7 +40,7 @@ type
 
   TLastInputInfo = tagLASTINPUTINFO;
 
-{$EXTERNALSYM GetLastInputInfo}
+  {$EXTERNALSYM GetLastInputInfo}
 
 //   End of functionality to detect system idle time   *************************
 
@@ -160,6 +160,7 @@ function DayStr(Pad: Boolean; PadLength: Integer): string;
 function DayMonthName(ADate: TDateTime; NameType: TDayMonthNameType; NameFormat: TDayMonthNameFormat): string;
 function CurrentPeriod(ADate: TDateTime): Integer;
 function GetMonthEndDate(Period: Integer): TDateTime;
+function GetMonthStartDate(Period: Integer): TDateTime;
 
 implementation
 
@@ -475,21 +476,21 @@ end;
 
 function GetIPAddress(HostName: string): string;
 var
-{$IFDEF MSWINDOWS}
+  {$IFDEF MSWINDOWS}
   R: Integer;
   WSAData: TWSAData;
-{$ENDIF MSWINDOWS}
+  {$ENDIF MSWINDOWS}
   HostEnt: PHostEnt;
   Host: AnsiString;
   SockAddr: TSockAddrIn;
 begin
   Result := '';
-{$IFDEF MSWINDOWS}
+  {$IFDEF MSWINDOWS}
   WSAData.wVersion := 0;
   R := WSAStartup(MakeWord(1, 1), WSAData);
   if R = 0 then
     try
-{$ENDIF MSWINDOWS}
+      {$ENDIF MSWINDOWS}
       Host := AnsiString(HostName);
       if Host = '' then
       begin
@@ -503,11 +504,11 @@ begin
 // Error on next line for incompatible types WinApi.WinSock.in_addr and OverbyteIcsWinSock.in_addr
         Result := string(AnsiString(inet_ntoa(SockAddr.Sin_Addr)));
       end;
-{$IFDEF MSWINDOWS}
+      {$IFDEF MSWINDOWS}
     finally
       WSACleanup;
     end;
-{$ENDIF MSWINDOWS}
+  {$ENDIF MSWINDOWS}
 end;
 
 function FindTheFile(const Filename: string; var Path: string): Boolean;
@@ -979,9 +980,11 @@ var
 begin
   Result := False;
   TempS := Trim(S);
-  if (Length(TempS) = 0) or (Length(TempS) > 1) then
+
+  if (Length(TempS) = 0) {or (Length(TempS) > 1)} then
     Exit;
-  Result := TempS = '1';
+
+  Result := (TempS = '1') or (AnsiLowerCase(TempS) = 'true');
 end;
 
 function BooleanToString(B: Boolean): string;
@@ -1266,11 +1269,11 @@ begin
   SLDebug := CreateStringList(PIPE);
   try
     TDirectory.CreateDirectory(Folder);
-{$IFDEF DLL}
+    {$IFDEF DLL}
     AppName := ChangeFileExt(ExtractFileName(GetModuleName(HInstance)), '');
-{$ELSE}
+    {$ELSE}
     AppName := ChangeFileExt(ExtractFileName(AppName), '');
-{$ENDIF}
+    {$ENDIF}
     LogFileName := AddChar(Folder, '\', rpEnd) + AppName + '.csv';
 
     if TFile.Exists(LogFileName) then
@@ -1849,6 +1852,15 @@ begin
   AMonth := Period mod 100;
   ADay := DaysInAMonth(AYear, AMonth);
   Result := EncodeDate(Ayear, Amonth, Aday);
+end;
+
+function GetMonthStartDate(Period: Integer): TDateTime;
+var
+  AYear, AMonth: Word;
+begin
+  Ayear := Period div 100;
+  AMonth := Period mod 100;
+  Result := EncodeDate(AYear, AMonth, 1);
 end;
 
 end.

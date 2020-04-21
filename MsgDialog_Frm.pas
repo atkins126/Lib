@@ -78,7 +78,6 @@ implementation
 
 {$R *.dfm}
 
-
 procedure TmsgDialogFrm.FormCreate(Sender: TObject);
 //var
 //  I, J: Integer;
@@ -221,9 +220,32 @@ begin
 
     memMsgDetail.Lines.Clear;
     memMsgDetail.Lines.Add(FMsg);
+
+    if memMsgDetail.Lines.Count <= 5 then
+      Self.Height := 205
+
+    else if (memMsgDetail.Lines.Count > 5)
+      and (memMsgDetail.Lines.Count <= 8) then
+      Self.Height := 250
+
+    else if (memMsgDetail.Lines.Count > 8)
+      and (memMsgDetail.Lines.Count <= 11) then
+      Self.Height := 290
+
+    else if (memMsgDetail.Lines.Count > 11)
+      and (memMsgDetail.Lines.Count <= 14) then
+      Self.Height := 330
+
+    else if (memMsgDetail.Lines.Count > 14)
+      and (memMsgDetail.Lines.Count <= 17) then
+      Self.Height := 370
+
+    else if memMsgDetail.Lines.Count > 17 then
+      Self.Height := 380
   finally
     Screen.Cursor := crDefault;
   end;
 end;
 
 end.
+

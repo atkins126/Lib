@@ -32,13 +32,10 @@ type
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
-//    procedure HandleProgressCaption(var MyMsg: TMessage); message WM_DOWNLOAD_CAPTION;
     procedure HandleCaption(var MyMsg: TMessage); message WM_DOWNLOAD_CAPTION;
     procedure HandleProgress(var MyMsg: TMessage); message WM_DOWNLOAD_PROGRESS;
   protected
-//    procedure WndProc(var MyMsg: TMessage); override;
-//    procedure HandleCaption(var MyMsg: TMessage); message WM_DOWNLOAD_CAPTION;
-//    procedure HandleProgress(var MyMsg: TMessage); message WM_DOWNLOAD_PROGRESS;
+    procedure CreateParams(var Params: TCreateParams); override;
   public
     { Public declarations }
   end;
@@ -52,66 +49,33 @@ implementation
 
 uses RUtils;
 
+procedure TProgressFrm.CreateParams(var Params: TCreateParams);
+begin
+  inherited;
+//  Params.Style := Params.Style or WS_BORDER or WS_THICKFRAME;
+//  Params.Style:= (Params.Style or WS_POPUP) {and (not WS_DLGFRAME)};
+  Params.Style := Params.Style or WS_BORDER or WS_DLGFRAME and (not WS_CAPTION) {and (not WS_DLGFRAME)};
+
+//        SetWindowLong(Handle, GWL_STYLE, Save and (not (WS_CAPTION)) or WS_BORDER);
+//      bsDialog:
+//        SetWindowLong(Handle, GWL_STYLE, Save and (not (WS_CAPTION)) or DS_MODALFRAME
+end;
+
 procedure TProgressFrm.FormCreate(Sender: TObject);
 begin
   inherited;
-{
-  $ED9564 = clWebConrFlowerBlue
-  $FAE6E6 = clWebLavender
-  $C0DCC0 = clMintgreen
-  $F0CAA6 = clSkyBlue
-}
-
   layMain.Align := alClient;
   layMain.LayoutLookAndFeel := lafCustomSkin;
-//  prgDownload.Properties.BeginColor := $ED9564
-//  prgDownload.Style.BorderStyle := ebsOffice11;
-//  prgDownload.Style.LookAndFeel.SkinName := '';
 end;
-
-//procedure TProgressFrm.HandleProgressCaption(var MyMsg: TMessage);
-//var
-////  P: PChar;
-////  S, T: string;
-//  SL: TStringList;
-//  Progress: Extended;
-//begin
-//  // WParam is the first parameter
-//  // LParam is the second parameter
-////  P := PChar(MyMsg.WParam);
-//  SL := TStringList.Create;
-//  SL.Delimiter := PIPE;
-//  SL.QuoteChar := '"';
-//  SL.DelimitedText := PChar(MyMsg.WParam);
-//  Progress := StrToFloat(SL.Values['PROGRESS']);
-//
-////  if Length(Trim(SL.Values['CAPTION'])) > 0 then
-////    lblDownloadName.Caption := ReplaceText(SL.Values['CAPTION'], '_', ' ');
-//
-//    lblDownloadName.Caption := SL.Values['CAPTION'];
-//
-//
-//  try
-//    prgDownload.Position := Trunc(Progress);
-//    prgDownload.Update;
-//    Update;
-//  finally
-//    MyMsg.Result := 1;
-//    SL.Free;
-//  end;
-//end;
 
 procedure TProgressFrm.FormShow(Sender: TObject);
 begin
   inherited;
   Width := 400;
-  Height := 120;
+  Height := 140;
 end;
 
 procedure TProgressFrm.HandleCaption(var MyMsg: TMessage);
-//var
-//  SL: TStringList;
-//  Progress: Extended;
 begin
   inherited;
   try
@@ -121,21 +85,10 @@ begin
   finally
     MyMsg.Result := 1;
   end;
-
-//  case MyMsg.Msg of
-//    WM_DOWNLOAD_CAPTION:
-//      begin
-//        SL := RUtils.CreateStringList(PIPE);
-//        SL.QuoteChar := '"';
-//        SL.DelimitedText := PChar(MyMsg.WParam);
-//        lblDownloadName.Caption := SL.Values['CAPTION'];
-//      end;
-//  end;
 end;
 
 procedure TProgressFrm.HandleProgress(var MyMsg: TMessage);
 var
-//  SL: TStringList;
   Progress: Extended;
 begin
   inherited;
@@ -147,53 +100,7 @@ begin
   finally
     MyMsg.Result := 1;
   end;
-
-//  case MyMsg.Msg of
-//    WM_DOWNLOAD_CAPTION:
-//      begin
-//        SL := RUtils.CreateStringList(PIPE);
-//        SL.QuoteChar := '"';
-//        SL.DelimitedText := PChar(MyMsg.WParam);
-//        Progress := StrToFloat(SL.Values['PROGRESS']);
-//
-//        try
-//          prgDownload.Position := Trunc(Progress);
-//          prgDownload.Update;
-//          Update;
-//        finally
-//          MyMsg.Result := 1;
-//          SL.Free;
-//        end;
-//      end;
-//end;
 end;
-
-//procedure TProgressFrm.WndProc(var MyMsg: TMessage);
-//var
-//  SL: TStringList;
-//  Progress: Extended;
-//begin
-//  inherited;
-//  case MyMsg.Msg of
-//    WM_DOWNLOAD_CAPTION:
-//      begin
-//        SL := RUtils.CreateStringList(PIPE);
-//        SL.QuoteChar := '"';
-//        SL.DelimitedText := PChar(MyMsg.WParam);
-//        Progress := StrToFloat(SL.Values['PROGRESS']);
-//        lblDownloadName.Caption := SL.Values['CAPTION'];
-//
-//        try
-//          prgDownload.Position := Trunc(Progress);
-//          prgDownload.Update;
-//          Update;
-//        finally
-//          MyMsg.Result := 1;
-//          SL.Free;
-//        end;
-//      end;
-//  end;
-//end;
 
 end.
 

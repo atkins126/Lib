@@ -218,8 +218,6 @@ inherited msgDialogFrm: TmsgDialogFrm
     Style.BorderStyle = ebsNone
     Style.Edges = []
     TabOrder = 2
-    ExplicitTop = 40
-    ExplicitHeight = 90
     Height = 85
     Width = 514
     object pnlMessage: TPanel
@@ -234,7 +232,6 @@ inherited msgDialogFrm: TmsgDialogFrm
       Padding.Right = 5
       Padding.Bottom = 5
       TabOrder = 0
-      ExplicitHeight = 88
       object memMsgDetail: TcxMemo
         Left = 5
         Top = 5
@@ -244,7 +241,6 @@ inherited msgDialogFrm: TmsgDialogFrm
         Style.BorderStyle = ebsNone
         Style.Edges = []
         TabOrder = 0
-        ExplicitHeight = 78
         Height = 73
         Width = 502
       end
@@ -259,7 +255,6 @@ inherited msgDialogFrm: TmsgDialogFrm
   end
   inherited lafLayoutList: TdxLayoutLookAndFeelList
     Left = 305
-    Top = 175
     inherited lafCustomSkin: TdxLayoutSkinLookAndFeel
       PixelsPerInch = 96
     end

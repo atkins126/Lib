@@ -146,11 +146,11 @@ const
   FS_USER_FOLDER = 'C:\FSUser\';
   ATTACHMENT_ROOT_FOLDER = 'Attachment\';
   LEAVE_ATTACHMENT_FOLDER = ATTACHMENT_ROOT_FOLDER + 'Leave\';
-{$IFDEF DEBUG}
+  {$IFDEF DEBUG}
   FS_RECOVERY_ROOT_FOLDER = 'C:\RCVR\';
-{$ELSE}
+  {$ELSE}
   FS_RECOVERY_ROOT_FOLDER = '\\RC-FSHIFT-2012\FShift\RCVR\';
-{$ENDIF}
+  {$ENDIF}
 
   // FireDAC conection definition file.
   CONNECTION_DEFINITION_FILE = ROOT_DATA_FOLDER + COMMON_FOLDER + 'ConnectionDefinitions.ini';
@@ -184,43 +184,22 @@ const
 
   //----------------------------------------------------------------------------
 
-  // Connection information stored in connection ini file (See above).
-  COMMON_DATA_CONNECTION_INFO =
-    '[CommonData]' + CRLF +
-    'DriverID=MSSQL' + CRLF +
-    'Server=RDI-DB-2012' + CRLF +
-    'Database=CommonData' + CRLF +
-    'User_Name=AuthUser' + CRLF +
-    'Password=authadmin' + CRLF +
-    'MetaDefCatalog=CommonData' + CRLF +
-    'MetaDefSchema=dbo';
-
-  TIME_SHEET_CONNECTION_INFO =
-    '[Timesheet]' + CRLF +
-    'DriverID=MSSQL' + CRLF +
-    'Server=RDI-DB-2012' + CRLF +
-    'Database=Timesheet' + CRLF +
-    'User_Name=ereq' + CRLF +
-    'Password=ereqadmin' + CRLF +
-    'MetaDefCatalog=Timesheet' + CRLF +
-    'MetaDefSchema=dbo';
-
-  FSHIFT_CONNECTION_INFO =
-    '[FShift]' + CRLF +
-    'DriverID=MSSQL' + CRLF +
-    'Server=RDI-3GATE' + CRLF +
-    'Database=FShift' + CRLF +
-    'User_Name=3gateshell' + CRLF +
-    'Password=rdi3gate' + CRLF +
-    'MetaDefCatalog=FShift' + CRLF +
-    'MetaDefSchema=dbo';
-
-  //----------------------------------------------------------------------------
-
   // Database actions.
   ACTION_INSERT = 1;
   ACTION_UPDATE = 2;
   ACTION_DELETE = -1;
+
+  //----------------------------------------------------------------------------
+
+  // First format specifier is the table name
+  // Second format specifier is the field name list
+  // Third format specifier contains the field values to be inserted
+  INSERT_RECORD = ' INSERT INTO %s(%s) VALUES(%s) RETURNING ID';
+
+  // First format specifier is the table name
+  // Second format specifier is name/value pair to set the new field values
+  // Third format specifier contains the where clause
+  UPDATE_RECORD = ' UPDATE %s SET %s %s';
 
 implementation
 

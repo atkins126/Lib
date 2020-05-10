@@ -222,7 +222,7 @@ begin
     memMsgDetail.Lines.Add(FMsg);
 
     if memMsgDetail.Lines.Count <= 5 then
-      Self.Height := 205
+      Self.Height := 215
 
     else if (memMsgDetail.Lines.Count > 5)
       and (memMsgDetail.Lines.Count <= 8) then
@@ -242,6 +242,31 @@ begin
 
     else if memMsgDetail.Lines.Count > 17 then
       Self.Height := 380
+
+// To adust for skin behaviour
+//    if memMsgDetail.Lines.Count <= 5 then
+//      Self.Height := 230
+//
+//    else if (memMsgDetail.Lines.Count > 5)
+//      and (memMsgDetail.Lines.Count <= 8) then
+//      Self.Height := 265
+//
+//    else if (memMsgDetail.Lines.Count > 8)
+//      and (memMsgDetail.Lines.Count <= 11) then
+//      Self.Height := 305
+//
+//    else if (memMsgDetail.Lines.Count > 11)
+//      and (memMsgDetail.Lines.Count <= 14) then
+//      Self.Height := 345
+//
+//    else if (memMsgDetail.Lines.Count > 14)
+//      and (memMsgDetail.Lines.Count <= 17) then
+//      Self.Height := 385
+//
+//    else if memMsgDetail.Lines.Count > 17 then
+//      Self.Height := 380
+
+
   finally
     Screen.Cursor := crDefault;
   end;

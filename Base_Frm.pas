@@ -18,7 +18,8 @@ uses
   cxImageList, dxLayoutLookAndFeels, cxLookAndFeels;
 
 type
-  TBaseFrm = class(TdxRibbonForm)
+//  TBaseFrm = class(TdxRibbonForm)
+  TBaseFrm = class(TForm)
     styRepository: TcxStyleRepository;
     actList: TActionList;
     lafLayoutList: TdxLayoutLookAndFeelList;
@@ -30,6 +31,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
+//    FCopyContentOnly: Boolean;
     { Private declarations }
   public
     { Public declarations }
@@ -46,11 +48,11 @@ type
     FSLRight: TStringList;
 //    FUserRight: TUserRightSet;
     FCallingFromShell: Boolean;
-//    FView: TcxCustomGridView;
-//    FAction: TActionArray;
     FUserData: TUserData;
-//    FCaptionTextColour: TColor;
-    procedure CopyCellValue(AView: TcxCustomGridView);
+
+//    property CopyContentOnly: Boolean read FCopyContentOnly write FCopyContentOnly;
+
+    procedure CopyRecordData(AView: TcxCustomGridView; CopyCellContentOnly: Boolean);
   end;
 
 var
@@ -60,13 +62,20 @@ implementation
 
 {$R *.dfm}
 
-procedure TBaseFrm.CopyCellValue(AView: TcxCustomGridView);
+procedure TBaseFrm.CopyRecordData(AView: TcxCustomGridView; CopyCellContentOnly: Boolean);
 var
   C: TcxCustomGridTableController;
 begin
   C := TcxGridTableView(AView).Controller;
   Clipboard.Clear;
-  Clipboard.AsText := C.FocusedRecord.Values[C.FocusedItem.Index];
+  if CopyCellContentOnly then
+    Clipboard.AsText := C.FocusedRecord.DisplayTexts[C.FocusedItem.Index]
+  else
+    TcxGridTableView(AView).CopyToClipboard(False);
+// This line of code copies the EditValue of an item. This yields undesirable
+// results whhen the control is a LookupComboBox as the EditValue is typically
+// the ID of the data being looked up
+//  Clipboard.AsText := C.FocusedRecord.Values[C.FocusedItem.Index];
 end;
 
 procedure TBaseFrm.FormCreate(Sender: TObject);

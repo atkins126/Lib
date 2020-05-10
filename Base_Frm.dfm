@@ -17,17 +17,17 @@ object BaseFrm: TBaseFrm
   PixelsPerInch = 96
   TextHeight = 13
   object styRepository: TcxStyleRepository
-    Left = 450
-    Top = 10
+    Left = 335
+    Top = 115
     PixelsPerInch = 96
   end
   object actList: TActionList
-    Left = 365
-    Top = 10
+    Left = 270
+    Top = 115
   end
   object lafLayoutList: TdxLayoutLookAndFeelList
-    Left = 375
-    Top = 65
+    Left = 410
+    Top = 175
     object lafCustomSkin: TdxLayoutSkinLookAndFeel
       PixelsPerInch = 96
     end
@@ -35,14 +35,14 @@ object BaseFrm: TBaseFrm
   object img16: TcxImageList
     SourceDPI = 96
     FormatVersion = 1
-    DesignInfo = 4260045
+    DesignInfo = 11469070
   end
   object img32: TcxImageList
     SourceDPI = 96
     Height = 32
     Width = 32
     FormatVersion = 1
-    DesignInfo = 4260115
+    DesignInfo = 11469140
     ImageInfo = <
       item
         ImageClass = 'TBitmap'

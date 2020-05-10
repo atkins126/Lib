@@ -25,7 +25,7 @@ type
     FAllow: Boolean;
   public
     { Public declarations }
-    procedure DoMouseWheel(Sender: TObject; Allow: Boolean);
+    procedure DoMyMouseWheel(Sender: TObject; Allow: Boolean);
     procedure LookupViewMouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
   end;
@@ -37,7 +37,7 @@ implementation
 
 {$R *.dfm}
 
-procedure TBaseLayoutFrm.DoMouseWheel(Sender: TObject; Allow: Boolean);
+procedure TBaseLayoutFrm.DoMyMouseWheel(Sender: TObject; Allow: Boolean);
 begin
   FAllow :=  Allow;
   TcxLookupComboBoxAccess(Sender).OnMouseWheel := LookupViewMouseWheel;

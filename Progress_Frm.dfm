@@ -1844,6 +1844,7 @@ inherited ProgressFrm: TProgressFrm
       Left = 11
       Top = 88
       Properties.BorderWidth = 1
+      Properties.PeakValue = 75.000000000000000000
       Properties.SolidTextColor = True
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D

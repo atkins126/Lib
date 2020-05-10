@@ -89,6 +89,7 @@ function FormatXMLString(S: string): string;
 function GetComputer: string;
 function GetIPAddress(HostName: string): string;
 function FindTheFile(const Filename: string; var Path: string): Boolean;
+procedure GetFileList(Folder, Mask: string; var FileList: TStringList);
 function ChangeDateFormat(aDate: TDateTime; WantMinutes: Boolean; FromToTime: Integer): string; overload;
 function ChangeDateFormat(aDate: TDateTime): string; overload;
 function CopyFolder(FromFolder, ToFolder: string): Boolean;
@@ -158,7 +159,7 @@ function MonthStr(Pad: Boolean; PadLength: Integer): string;
 function DayInt(ADate: TDateTime): Integer;
 function DayStr(Pad: Boolean; PadLength: Integer): string;
 function DayMonthName(ADate: TDateTime; NameType: TDayMonthNameType; NameFormat: TDayMonthNameFormat): string;
-function CurrentPeriod(ADate: TDateTime): Integer;
+function GetCurrentPeriod(ADate: TDateTime): Integer;
 function GetMonthEndDate(Period: Integer): TDateTime;
 function GetMonthStartDate(Period: Integer): TDateTime;
 
@@ -582,6 +583,28 @@ begin
   begin
     Result := True;
     Path := ResultPath;
+  end;
+end;
+
+procedure GetFileList(Folder, Mask: string; var FileList: TStringList);
+var
+  SearchRec: TSearchRec;
+begin
+  Folder := AddChar(Folder, '\', rpEnd);
+
+  try
+    Findfirst(Folder + Mask, faAnyFile + faDirectory, SearchRec);
+    repeat
+      if (SearchRec.Name <> '')
+        and (SearchRec.Name <> '.')
+        and (SearchRec.Name <> '..') then
+      begin
+        FileList.Add(ExtractFileName(SearchRec.Name));
+        GetFileList(Folder + SearchRec.Name, Mask, FileList);
+      end;
+    until FindNext(SearchRec) <> 0;
+  finally
+    FindClose(SearchRec);
   end;
 end;
 
@@ -1757,7 +1780,7 @@ begin
   Result := Trim(Value);
 end;
 
-function CurrentPeriod(ADate: TDateTime): Integer;
+function GetCurrentPeriod(ADate: TDateTime): Integer;
 var
   Day, Month, Year: Word;
 begin

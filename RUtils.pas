@@ -162,6 +162,7 @@ function DayMonthName(ADate: TDateTime; NameType: TDayMonthNameType; NameFormat:
 function GetCurrentPeriod(ADate: TDateTime): Integer;
 function GetMonthEndDate(Period: Integer): TDateTime;
 function GetMonthStartDate(Period: Integer): TDateTime;
+function ValidEmailAddress(EmailAddress: string; var Response: string): Boolean;
 
 implementation
 
@@ -1884,6 +1885,35 @@ begin
   Ayear := Period div 100;
   AMonth := Period mod 100;
   Result := EncodeDate(AYear, AMonth, 1);
+end;
+
+function ValidEmailAddress(EmailAddress: string; var Response: string): Boolean;
+var
+  AmpPos, DotPos: Integer;
+begin
+  Response := 'Valid';
+  AmpPos := Pos('@', EmailAddress);
+  Result := AmpPos > 0;
+
+  if AmpPos = 0 then
+  begin
+    Response := 'Invalid email address.' + CRLF + 'No @ (ampersand) character found in email address.';
+    Exit;
+  end;
+
+  DotPos := Pos('.', EmailAddress);
+  Result := DotPos > 0;
+  if DotPos = 0 then
+  begin
+    Response := 'Invalid email address.' + CRLF + 'No . (dot) character found in email address.';
+    Exit;
+  end;
+
+  if (AmpPos = Dotpos + 1) or (AmpPos = Dotpos - 1) then
+  begin
+    Response := 'Invalid email address.' + CRLF + '@ and . characters found next to each other.';
+    Result := False;
+  end;
 end;
 
 end.

@@ -40,7 +40,7 @@ type
   TUserRights = 1..255;
   TUserRightSet = set of TUserRights;
   TZCompressionLevel = (zcNone, zcFastest, zcDefault, zcMax);
-  TDBActions = (acInsert, acModify, acDelete, acBrowsing);
+  TDBActions = (acInsert, acEdit, acDelete, acBrowsing);
   TKitStoreTransactionTypes = (ttReceiving, ttIssuing, ttReturn, ttCancel, ttBinTransfer);
   TFileExtensions = (xls, xlsx, doc, docx, mdb, accdb, pdf, jpg, png, bitmap, bmp);
   TReportActions = (raPreview, raPrint, raExcel, raPDF);
@@ -53,6 +53,7 @@ type
   EFileNotFoundException = class(Exception);
   EExecutionException = class(Exception);
   EServerError = class(Exception);
+  EMailSendError = class(Exception);
 
 var
   FileExtension: TFileExtensions;
